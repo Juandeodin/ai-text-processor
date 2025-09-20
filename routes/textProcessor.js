@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { processLargeText, getProviderInfo } = require('../services/aiService');
-const { chunkText, smartChunkText } = require('../utils/textChunker');
+const { chunkText } = require('../utils/textChunker');
 
 // Endpoint POST para EventSource (Server-Sent Events)
 router.post('/process-stream', async (req, res) => {
