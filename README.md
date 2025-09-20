@@ -325,16 +325,7 @@ Si encuentras algún error, por favor:
 
 ## 📞 Soporte
 
-- 📧 Email: tu-email@ejemplo.com
-- 🐛 Issues: [GitHub Issues](https://github.com/tu-usuario/ai-text-processor/issues)
-- 📖 Documentación: [Wiki del proyecto](https://github.com/tu-usuario/ai-text-processor/wiki)
+- 📧 Email: juancas99999@gmail.com
 
-## 🙏 Agradecimientos
-
-- OpenAI por su increíble API
-- La comunidad de desarrolladores de Node.js
-- Todos los contribuidores del proyecto
-
----
 
 ⭐ **¡Si este proyecto te resulta útil, no olvides darle una estrella!** ⭐
