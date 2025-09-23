@@ -152,7 +152,7 @@ class AITextProcessor {
                 options: {
                     maxChunkSize: 12000,      // Chunks optimizados para menos requests
                     overlapSize: 50,          // Superposición mínima
-                    model: 'gemma3:27b',      // Modelo local
+                    model: 'gemini-2.5-flash',      // Modelo gemini
                     optimizeForLargeTexts: true
                 }
             };
@@ -285,7 +285,8 @@ class AITextProcessor {
         this.processingTime.textContent = `Tiempo: ${processingTime}s`;
         
         this.hideProgressSection();
-        this.showOutputSection();
+        this.finalizeResultArea();
+        this.enableOutputButtons();
         this.isProcessing = false;
         
         if (this.eventSource) {
@@ -307,6 +308,16 @@ class AITextProcessor {
         
         this.isProcessing = false;
         this.hideProgressSection();
+        this.enableOutputButtons();
+        
+        // Limpiar indicador de tiempo real
+        this.outputText.classList.remove('realtime-loading');
+        const resultHeader = document.querySelector('#outputSection h2');
+        if (resultHeader) {
+            resultHeader.classList.remove('processing');
+            resultHeader.innerHTML = '<i class="fas fa-check-circle"></i> Resultado';
+        }
+        
         this.showToast('Procesamiento cancelado', 'info');
     }
 
@@ -388,6 +399,8 @@ class AITextProcessor {
         this.progressSection.classList.add('fade-in');
         this.processBtn.disabled = true;
         this.processBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Procesando...';
+        this.disableOutputButtons();
+        this.setupRealtimeResultArea();
     }
 
     hideProgressSection() {
@@ -409,6 +422,64 @@ class AITextProcessor {
         setTimeout(() => {
             this.toast.classList.remove('show');
         }, 4000);
+    }
+
+    disableOutputButtons() {
+        // Deshabilitar botones de acción del resultado
+        this.copyBtn.disabled = true;
+        this.downloadBtn.disabled = true;
+        this.newProcessBtn.disabled = true;
+        
+        // Agregar clase visual para mostrar que están deshabilitados
+        this.copyBtn.classList.add('disabled');
+        this.downloadBtn.classList.add('disabled');
+        this.newProcessBtn.classList.add('disabled');
+    }
+
+    enableOutputButtons() {
+        // Habilitar botones de acción del resultado
+        this.copyBtn.disabled = false;
+        this.downloadBtn.disabled = false;
+        this.newProcessBtn.disabled = false;
+        
+        // Remover clase visual de deshabilitado
+        this.copyBtn.classList.remove('disabled');
+        this.downloadBtn.classList.remove('disabled');
+        this.newProcessBtn.classList.remove('disabled');
+    }
+
+    setupRealtimeResultArea() {
+        // Mostrar la sección de resultado con indicador de tiempo real
+        this.outputSection.classList.remove('hidden');
+        this.outputSection.classList.add('fade-in');
+        
+        // Limpiar resultado anterior y mostrar indicador de carga
+        this.outputText.value = '';
+        this.outputText.placeholder = '⏳ Resultado en tiempo real...\n\nEl contenido aparecerá aquí conforme se vaya procesando cada fragmento del texto.';
+        
+        // Agregar clase CSS para el indicador de carga
+        this.outputText.classList.add('realtime-loading');
+        
+        // Mostrar un header indicando que está en proceso
+        const resultHeader = document.querySelector('#outputSection h2');
+        if (resultHeader) {
+            resultHeader.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Resultado en tiempo real';
+            resultHeader.classList.add('result-header', 'processing');
+        }
+    }
+
+    finalizeResultArea() {
+        // Remover indicador de carga
+        this.outputText.classList.remove('realtime-loading');
+        this.outputText.placeholder = 'El resultado procesado aparecerá aquí...';
+        
+        // Actualizar header de resultado
+        const resultHeader = document.querySelector('#outputSection h2');
+        if (resultHeader) {
+            resultHeader.innerHTML = '<i class="fas fa-check-circle"></i> Resultado completado';
+            resultHeader.classList.remove('processing');
+            resultHeader.classList.add('completed');
+        }
     }
 }
 

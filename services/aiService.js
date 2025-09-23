@@ -168,12 +168,13 @@ async function processWithGoogle(text, operation, targetLanguage, options) {
     let googleModel = 'gemini-1.5-flash';
     if (options.model) {
         const modelMapping = {
-            'gpt-3.5-turbo': 'gemini-1.5-flash',
-            'gpt-4': 'gemini-1.5-pro',
-            'gpt-4-turbo': 'gemini-1.5-pro',
-            'gemini-pro': 'gemini-1.5-flash',
-            'gemini-1.5-pro': 'gemini-1.5-pro',
-            'gemini-1.5-flash': 'gemini-1.5-flash'
+            'gpt-3.5-turbo': 'gemini-2.5-flash',
+            'gpt-4': 'gemini-2.5-pro',
+            'gpt-4-turbo': 'gemini-2.5-pro',
+            'gemini-pro': 'gemini-2.5-flash',
+            'gemini-1.5-pro': 'gemini-2.5-pro',
+            'gemini-1.5-flash': 'gemini-2.5-flash',
+            'gemini-2.5-flash': 'gemini-2.5-flash',
         };
         googleModel = modelMapping[options.model] || 'gemini-1.5-flash';
         console.log(`🔄 Modelo solicitado: ${options.model}, usando: ${googleModel}`);
